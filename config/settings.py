@@ -127,3 +127,9 @@ STATIC_URL = '/static/'
 
 # Custom
 AUTH_USER_MODEL = 'cms.User'
+AUTHENTICATION_BACKENDS_MODEL = [
+    'django.contrib.auth.backends.ModelBackend',
+    'cms.backends.EmailAuthBackend',
+]
+LOGIN_URL = 'cms:login'
+LOGIN_REDIRECT_URL = 'cms:index'

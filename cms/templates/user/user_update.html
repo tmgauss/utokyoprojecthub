@@ -1,0 +1,72 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}{{ user.username }} | {% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container is-mobile">
+        <h1 class="title">ユーザー情報の更新</h1>
+        <hr>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">ユーザーネーム</label>
+                <div class="control has-icons-left">
+                    {{ form.username }}
+                    <span class="icon is-small is-left">@</span>
+                </div>
+                <p class="help has-text-grey">@を含めないでください</p>
+            </div>
+            <div class="field">
+                <label class="label">姓</label>
+                <div class="control has-icons-left">
+                    {{ form.last_name }}
+                    <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">名</label>
+                <div class="control has-icons-left">
+                    {{ form.first_name }}
+                    <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">学年</label>
+                <div class="control has-icons-left">
+                    {{ form.grade }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">メールアドレス</label>
+                <div class="control has-icons-left">
+                    {{ form.email }}
+                    <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Twitter</label>
+                <div class="control has-icons-left">
+                    {{ form.twitter }}
+                    <span class="icon is-small is-left">@</span>
+                    <p class="help has-text-grey">@を含めないでください</p>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">GitHub</label>
+                <div class="control has-icons-left">
+                    {{ form.github }}
+                    <span class="icon is-small is-left">@</span>
+                    <p class="help has-text-grey">@を含めないでください</p>
+                </div>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <input type="submit" value="保存" class="button is-success">
+                    <input type="hidden" name="next" value="{{ next }}" >
+                </p>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

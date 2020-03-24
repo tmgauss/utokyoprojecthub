@@ -1,0 +1,49 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}My Page | {% endblock %}
+
+{% block content %}
+<section class="hero is-small is-link is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">My Page</h1>
+            <h2 class="subtitle">@{{ user.username }}</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <h1 class="title has-text-centered has-text-dark">My Project</h1>
+        <h2 class="subtitle has-text-centered">"A launchpad of innovation"</h2>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Log</p>
+                    <p class="subtitle">これまでの道程</p>
+                    <div class="content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Commit</p>
+                    <p class="subtitle">ここまでを記録</p>
+                    <div class="content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Plan</p>
+                    <p class="subtitle">これからの目標</p>
+                    <div class="content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

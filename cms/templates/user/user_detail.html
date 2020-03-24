@@ -1,0 +1,56 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}{{ user.username }} | {% endblock %}
+
+{% block content %}
+<section class="hero is-link is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64 is-left">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <h1 class="title">
+                        {{ user.last_name }} {{ user.first_name }}
+                    </h1>
+                    <h2 class="subtitle">
+                        @{{ user.username }}
+                    </h2>
+                    {% if user.is_authenticated and user.pk == request.user.pk %}
+                    <a href="{% url 'cms:user_update' user.pk %}">
+                        <button class="button is-small is-info is-inverted is-outlined">
+                            <span class="icon is-small is-left"><i class="fas fa-user-edit"></i></span>
+                            <strong>プロフィールを追加する</strong>
+                        </button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <div class="tags has-addons">
+                        <span class="tag"><strong>Twitter</strong></span>
+                        <span class="tag is-dark"><a class="has-text-white" href="https://twitter.com/{{ user.twitter }}">@{{ user.twitter }}</a></span>
+                    </div>
+                </div>
+                <div class="level-item">
+                    <div class="tags has-addons">
+                        <span class="tag"><strong>GitHub</strong></span>
+                        <span class="tag is-dark"><a class="has-text-white" href="https://github.com/{{ user.github }}">@{{ user.github }}</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>s
+    </div>
+</section>
+{% endblock %}
