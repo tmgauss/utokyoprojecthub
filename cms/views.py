@@ -1,6 +1,7 @@
 from django.shortcuts import render, resolve_url
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import (
@@ -13,6 +14,13 @@ from django.views.generic.edit import (
 
 from .forms import (
     EmailAuthenticationForm, UserCreateForm, UserUpdateForm,
+    ProjectCreateForm, ProjectUpdateForm,
+)
+from .models import (
+    Project,
+)
+from .mixins import (
+    OnlyYouMixin, OnlyProjectMemberMixin,
 )
 
 UserModel = get_user_model()
@@ -31,7 +39,6 @@ def contact(request):
 
 
 class Login(LoginView):
-    """ログインページ"""
     form_class = EmailAuthenticationForm
     template_name = 'registration/login.html'
 
@@ -40,17 +47,9 @@ class Logout(LogoutView):
     template_name = 'cms/index.html'
 
 
-class OnlyYouMixin(UserPassesTestMixin):
-    raise_exception = True
-
-    def test_func(self):
-        user = self.request.user
-        return user.pk == self.kwargs['pk'] or user.is_superuser
-
-
 class UserCreate(CreateView):
     form_class = UserCreateForm
-    template_name = "registration/signup.html"
+    template_name = 'registration/signup.html'
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
@@ -79,6 +78,49 @@ class UserUpdate(OnlyYouMixin, UpdateView):
         return resolve_url('cms:user_detail', pk=self.kwargs['pk'])
 
 
-class MyPage(OnlyYouMixin, DetailView):
+class MyPage(LoginRequiredMixin, OnlyYouMixin, DetailView):
     model = UserModel
     template_name = 'user/mypage.html'
+
+
+class ProjectCreate(LoginRequiredMixin, CreateView):
+    model = Project
+    form_class = ProjectCreateForm
+    template_name = 'project/project_create.html'
+    success_url = reverse_lazy('cms:project_welcome')
+
+    def form_valid(self, form):
+        project = form.save(commit=False)
+        project.members.add(self.request.user)
+        project.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+@login_required
+def project_welcome(request):
+    return render(request, 'project/project_welcome.html', {})
+
+
+class ProjectUpdate(LoginRequiredMixin, OnlyProjectMemberMixin, UpdateView):
+    model = Project
+    template_name = 'project/project_update.html'
+    form_class = ProjectUpdateForm
+
+    def get_success_url(self):
+        return resolve_url('cms:project_detail', pk=self.kwargs['pk'])
+
+
+class ProjectDetail(DetailView):
+    model = Project
+    template_name = 'project/project_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pk'] = self.kwargs['pk']
+        return context
+
+
+class ProjectDashboard(LoginRequiredMixin, OnlyProjectMemberMixin, DetailView):
+    model = Project
+    template_name = 'project/dashboard.html'
+

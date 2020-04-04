@@ -1,0 +1,76 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}{{ project.name }} | {% endblock %}
+
+{% block content %}
+<section class="hero is-danger is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64 is-left">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <h1 class="title">
+                        {{ project.name }}
+                    </h1>
+                    <h2 class="subtitle">
+                        since {{ project.created_at.year }}年{{ project.created_at.month }}月{{ project.created_at.day }}日
+                    </h2>
+                    {% if user.is_authenticated %} <!-- TODO -->
+                    <a href="{% url 'cms:dashboard' project.id %}">
+                        <button class="button is-small is-info is-inverted is-outlined">
+                            <span class="icon is-small is-left"><i class="fas fa-edit"></i></span>
+                            <strong>{{ project.name }}のDashboardを開く</strong>
+                        </button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        {% if project.is_public == True %}
+            <div class="level">
+                <div class="level-left">
+                    {% if project.twitter %}
+                    <div class="level-item">
+                        <div class="tags has-addons">
+                            <span class="tag"><span class="icon is-small is-left"><i class="fab fa-twitter"></i></span></span>
+                            <span class="tag is-dark"><a class="has-text-white" href="https://twitter.com/{{ user.twitter }}" target="_blank">@{{ project.twitter }}</a></span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if project.github %}
+                    <div class="level-item">
+                        <div class="tags has-addons">
+                            <span class="tag"><span class="icon is-small is-left"><i class="fab fa-github"></i></span></span>
+                            <span class="tag is-dark"><a class="has-text-white" href="https://github.com/{{ user.github }}" target="_blank">@{{ project.github }}</a></span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="level-item">
+                        <div class="tags has-addons">
+                            <span class="tag"><span class="icon is-small is-left"><i class="fas fa-link"></i></span></span>
+                            <span class="tag is-dark"><a class="has-text-white" href="{{ project.product_url }}"  target="_blank">{{ project.product_url }}</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>{{ project.description }}</p>
+            {% if project.does_accept_application %}
+                <hr>
+                <h1 class="title is-4">参加するには</h1>
+                <h2 class="subtitle is-6">To join this project</h2>
+                <p>{{ project.application }}</p>
+            {% endif %}
+        {% else %}
+            <p class="is-danger"><strong>このプロジェクトは非公開です。</strong></p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

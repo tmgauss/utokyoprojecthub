@@ -4,7 +4,9 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import User
+from .models import (
+    User, Tag, Project, ProjectLog, ProjectPlan, ProjectUserRelation,
+)
 
 
 class UserCreationForm(forms.ModelForm):
@@ -43,7 +45,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'is_active', 'is_staff')
+        fields = ('email', 'password', 'is_active', 'is_staff',)
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -64,7 +66,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username', 'last_name', 'first_name', 'grade', 'twitter', 'github',)}),
+        ('Personal info', {'fields': ('username', 'last_name', 'first_name', 'grade', 'twitter', 'github', 'bio')}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -85,3 +87,10 @@ admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+
+# Custom
+admin.site.register(Tag)
+admin.site.register(Project)
+admin.site.register(ProjectLog)
+admin.site.register(ProjectPlan)
+admin.site.register(ProjectUserRelation)

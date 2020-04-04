@@ -1,0 +1,73 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}Welcome | {% endblock %}
+
+{% block content %}
+<section class="hero is-medium is-danger is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title has-text-centered">Welcome to Project Hub!!</h1>
+            <h2 class="subtitle has-text-centered">いざ、長い旅が始まりました<br>早速、開発に取り掛かりましょう</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container has-text-centered">
+        <h1 class="title has-text-centered has-text-dark">よくある失敗：モチベーション</h1>
+        <p>
+            学生のプロジェクトでありがちなのは「プロダクトを必要としている人がいるか」
+            を検証し終わる前にチームの勢いが収束してしまうことです。
+            学生のプロジェクトの燃料は単純にやる気だけです。
+            契約や給料のようなメンバーを縛り付けておく方法はありません。
+            その種の失敗を避けるためにはモチベーションという燃料をどう使うかについて考えなければなりません。
+        </p>
+    </div>
+</section>
+<hr>
+<section class="section">
+    <div class="container">
+        <h1 class="title has-text-centered has-text-dark">失敗しないためにすべきこと</h1>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Build</p>
+                    <p class="subtitle">プロトタイプを開発する</p>
+                    <div class="content">
+                        <p>できるだけ早く必要最低限の機能を持ったプロダクト（サービス）を作りましょう。
+                            実際に使ってもらうことは、プロダクトが本当に必要とされるかどうかを問う最も有効な検証法です。</p>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Log & Plan</p>
+                    <p class="subtitle">ログとプランを書く</p>
+                    <div class="content">
+                        <p>往々にして草創期のプロジェクトは必要以上に理想的になる傾向があります。
+                            ユーザーを獲得するという現実的で本質的な目標を見失わないために、ログとプランを記述し、積極的に省みましょう。</p>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Go Public</p>
+                    <p class="subtitle">ユーザーと対話する</p>
+                    <div class="content">
+                        <p>プロジェクトを公開することは、新たなユーザーやメンバー、サポーター（投資家など）との対話を喚起し、
+                            また、やらなければならない状況へチームを駆り立てる効果があります。</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container has-text-centered">
+        <a href="#">
+            <button class="button is-info">
+                <strong>Dashboardへ</strong>
+            </button>
+        </a>
+    </div>
+</section>
+{% endblock %}

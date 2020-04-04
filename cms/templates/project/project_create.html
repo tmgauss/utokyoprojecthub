@@ -1,0 +1,100 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}Start Project | {% endblock %}
+
+{% block content %}
+<section class="hero is-small is-danger is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">プロジェクトを始める</h1>
+            <h2 class="subtitle">Start your project</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container is-mobile">
+        <form method="post" action="{% url 'cms:project_create' %}">
+            {% csrf_token %}
+            <h1 class="title">プロジェクトの情報</h1>
+            <hr>
+            <div class="field">
+                <label class="label">プロジェクト名</label>
+                <div class="control has-icons-left">
+                    {{ form.name }}
+                    <span class="icon is-small is-left"><i class="fas fa-rocket"></i></span>
+                </div>
+                <p class="help">必須</p>
+            </div>
+            <div class="field">
+                <label class="label">プロジェクトの簡潔な説明</label>
+                <div class="control">
+                    {{ form.description }}
+                </div>
+                <p class="help">必須／140字以内</p>
+            </div>
+            <br>
+            <h1 class="title">プロダクトの情報</h1>
+            <hr>
+            <div class="field">
+                <label class="label">プロダクトのURL</label>
+                <div class="control has-icons-left">
+                    {{ form.product_url }}
+                    <span class="icon is-small is-left"><i class="fas fa-link"></i></span>
+                    <p class="help">必須／まだ完成していない場合ピッチ資料のGoogle Driveのリンクなどを与えること</p>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Twitter</label>
+                <div class="control has-icons-left">
+                    {{ form.twitter }}
+                    <span class="icon is-small is-left">@</span>
+                    <p class="help">任意／@を含めないこと</p>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">GitHub</label>
+                <div class="control has-icons-left">
+                    {{ form.github }}
+                    <span class="icon is-small is-left">@
+                    </span>
+                    <p class="help">任意／@を含めないこと</p>
+                </div>
+            </div>
+            <br>
+            <h1 class="title">公開に関する設定</h1>
+            <hr>
+            <div class="field">
+                <label class="label">公開設定</label>
+                <div class="control">
+                    <label class="checkbox">
+                        {{ form.is_public }}
+                        このプロジェクトを公開する（推奨）
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">応募設定</label>
+                <div class="control">
+                    <label class="checkbox">
+                        {{ form.does_accept_application }}
+                        このプロジェクトの新しいメンバーを募集する
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">応募方法</label>
+                <div class="control">
+                    {{ form.application }}
+                </div>
+                <p class="help">任意</p>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <input type="submit" value="作成" class="button is-success">
+                    <input type="hidden" name="next" value="{{ next }}" >
+                </p>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

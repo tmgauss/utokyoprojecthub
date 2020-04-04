@@ -1,0 +1,84 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}Dashboard | {% endblock %}
+
+{% block content %}
+<section class="hero is-small is-danger is-bold">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">Dashboard</h1>
+            <h2 class="subtitle">{{ project.name }}</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container tabs is-centered is-boxed">
+        <ul>
+            <li class="is-active">
+                <a href="{% url 'cms:dashboard' project.id %}">
+                    <span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
+                    <span>Member</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon is-small"><i class="fas fa-marker" aria-hidden="true"></i></span>
+                    <span>Commit</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon is-small"><i class="fas fa-tasks" aria-hidden="true"></i></span>
+                    <span>Plan</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'cms:project_update' project.id %}">
+                    <span class="icon is-small"><i class="fas fa-cogs" aria-hidden="true"></i></span>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="tile is-ancestor has-text-centered">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Latest Commit</p>
+                    <p class="subtitle">ここまでの記録</p>
+                    <div class="content">
+                        <p>7days ago</p>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Idea</p>
+                    <p class="subtitle">アイデア フェーズ</p>
+                    <div class="content">
+                        <progress class="progress is-info" value="1" max="4"></progress>
+                        <p>このプロジェクトは<strong>アイデア段階</strong>です。できるだけ早くプロトタイプ開発に取り掛かりましょう。
+                            開発に取り組み始めたら、<a href="#">Commit</a>から状態を更新しましょう。</p>
+                    </div>
+
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">Next Task</p>
+                    <p class="subtitle">次のタスク</p>
+                    <div class="content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

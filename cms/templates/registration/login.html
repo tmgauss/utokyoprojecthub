@@ -5,15 +5,13 @@
 {% block content %}
 <section class="section">
     <div class="container is-mobile">
-        <h1 class="title">ログイン</h1>
+        <h1 class="title is-4">ログイン</h1>
+        <h2 class="subtitle is-6">Login</h2>
         <hr>
-        <p>サインアップは<a href="/signup/">こちら</a></p>
+        <p class="help">アカウントをお持ちでない方へ：サインアップは<a href="/signup/">こちら</a></p>
         <br>
-        <form method="post" action="">
+        <form method="post" action="/login/">
             {% csrf_token %}
-            <div class="is-danger">
-                {{ form.non_field_errors }}
-            </div>
             <div class="field">
                 <label class="label">メールアドレス</label>
                 <div class="control has-icons-left">

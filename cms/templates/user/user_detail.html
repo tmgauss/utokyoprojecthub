@@ -1,6 +1,6 @@
 {% extends 'cms/base.html' %}
 
-{% block title %}{{ user.username }} | {% endblock %}
+{% block title %}{{ user.last_name }} {{ user.first_name }} | {% endblock %}
 
 {% block content %}
 <section class="hero is-link is-bold">
@@ -19,7 +19,7 @@
                     <h2 class="subtitle">
                         @{{ user.username }}
                     </h2>
-                    {% if user.is_authenticated and user.pk == request.user.pk %}
+                    {% if user.pk == request.user.pk %}
                     <a href="{% url 'cms:user_update' user.pk %}">
                         <button class="button is-small is-info is-inverted is-outlined">
                             <span class="icon is-small is-left"><i class="fas fa-user-edit"></i></span>
@@ -36,21 +36,53 @@
     <div class="container">
         <div class="level">
             <div class="level-left">
+                {% if user.twitter %}
                 <div class="level-item">
                     <div class="tags has-addons">
-                        <span class="tag"><strong>Twitter</strong></span>
-                        <span class="tag is-dark"><a class="has-text-white" href="https://twitter.com/{{ user.twitter }}">@{{ user.twitter }}</a></span>
+                        <span class="tag"><span class="icon is-small is-left"><i class="fab fa-twitter"></i></span></span>
+                        <span class="tag is-dark"><a class="has-text-white" href="https://twitter.com/{{ user.twitter }}" target="_blank">@{{ user.twitter }}</a></span>
                     </div>
                 </div>
+                {% endif %}
+                {% if user.github %}
                 <div class="level-item">
                     <div class="tags has-addons">
-                        <span class="tag"><strong>GitHub</strong></span>
-                        <span class="tag is-dark"><a class="has-text-white" href="https://github.com/{{ user.github }}">@{{ user.github }}</a></span>
+                        <span class="tag"><span class="icon is-small is-left"><i class="fab fa-github"></i></span></span>
+                        <span class="tag is-dark"><a class="has-text-white" href="https://github.com/{{ user.github }}" target="_blank">@{{ user.github }}</a></span>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>s
-    </div>
+        {% if user.bio %}
+            <p>{{ user.bio }}</p>
+        {% elif user.pk == request.user.pk %}
+            <a href="{% url 'cms:user_update' user.pk %}">
+                <button class="button is-small is-danger is-outlined">
+                    <span class="icon is-small is-left"><i class="fas fa-user-edit"></i></span>
+                    <strong>自己紹介を追加する</strong>
+                </button>
+            </a>
+        {% else %}
+            <p>プロフィールは追加されておりません。</p>
+        {% endif %}
+        <hr>
+        <div class="is-mobile box">
+            <h1 class="title is-4">参加中のプロジェクト</h1>
+            <h2 class="subtitle is-6">ongoing project</h2>
+            <div class="tile is-ancestor">
+                {% for project in user.project_set.all %}
+                <div class="tile is-parent is-3">
+                    <article class="box tile is-child">
+                        <p class="level-item title is-5">{{ project.name }}</p>
+                        <progress class="level-item progress is-small is-link" value="{{ project.state }}" max="4"></progress>
+                        <a href="{% url 'cms:project_detail' project.pk %}" class="is-grey">
+                            <button class="button is-small is-link is-right">詳細を見る</button>
+                        </a>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
 </section>
 {% endblock %}

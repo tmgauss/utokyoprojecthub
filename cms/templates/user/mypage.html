@@ -5,7 +5,7 @@
 {% block content %}
 <section class="hero is-small is-link is-bold">
     <div class="hero-body">
-        <div class="container">
+        <div class="container has-text-centered">
             <h1 class="title">My Page</h1>
             <h2 class="subtitle">@{{ user.username }}</h2>
         </div>
@@ -13,33 +13,46 @@
 </section>
 <section class="section">
     <div class="container">
-        <h1 class="title has-text-centered has-text-dark">My Project</h1>
-        <h2 class="subtitle has-text-centered">"A launchpad of innovation"</h2>
         <div class="tile is-ancestor">
-            <div class="tile is-parent">
+            <div class="tile is-parent is-6">
                 <article class="tile is-child box">
-                    <p class="title">Log</p>
-                    <p class="subtitle">これまでの道程</p>
+                    <p class="title">Ongoing Project</p>
+                    <p class="subtitle">進行中のプロジェクト</p>
                     <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                        <ul>
+                            {% for project in user.project_set.all %}
+                            <li class="box">
+                                <a href="{% url 'cms:dashboard' project.pk %}" class="has-text-grey">
+                                    <p class="title is-6">{{ project.name }}</p>
+                                    <progress class="progress is-small is-info" value="{{ project.state }}" max="4"></progress>
+                                </a>
+                            </li>
+                            {% endfor %}
+                            <li class="button is-info is-light">
+                                <a href="{% url 'cms:project_create' %}">
+                                    <span class="icon is-small is-left"><i class="fas fa-plus"></i></span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </article>
             </div>
-            <div class="tile is-parent">
+            <div class="tile is-parent is-6">
                 <article class="tile is-child box">
-                    <p class="title">Commit</p>
-                    <p class="subtitle">ここまでを記録</p>
+                    <p class="title">Settings</p>
+                    <p class="subtitle">設定</p>
                     <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-                    </div>
-                </article>
-            </div>
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <p class="title">Plan</p>
-                    <p class="subtitle">これからの目標</p>
-                    <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                        <hr class="">
+                        <a href="{% url 'cms:user_detail' user.pk %}" class="">
+                            <p class="title is-4">Check Your Portfolio</p>
+                            <p class="subtitle is-6">プロフィールを確認する</p>
+                        </a>
+                        <hr>
+                        <a href="{% url 'cms:user_update' user.pk %}" class="is-grey">
+                            <p class="title is-4">Change Your Portfolio</p>
+                            <p class="subtitle is-6">プロフィールを変更する</p>
+                        </a>
+                        <hr>
                     </div>
                 </article>
             </div>

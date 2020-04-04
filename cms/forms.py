@@ -5,6 +5,7 @@ from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from .backends import EmailAuthBackend
+from .models import Project
 
 UserModel = get_user_model()
 
@@ -59,6 +60,7 @@ class EmailAuthenticationForm(forms.Form):
 
 
 class UserCreateForm(UserCreationForm):
+
     class Meta:
         model = UserModel
         fields = ('email', 'password1', 'password2')
@@ -79,3 +81,35 @@ class UserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'input'
+
+
+class ProjectCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('name', 'product_url', 'description', 'is_public', 'twitter', 'github', 'does_accept_application', 'application')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['class'] = 'input'
+        self.fields['description'].widget.attrs['class'] = 'textarea'
+        self.fields['product_url'].widget.attrs['class'] = 'input'
+        self.fields['twitter'].widget.attrs['class'] = 'input'
+        self.fields['github'].widget.attrs['class'] = 'input'
+        self.fields['application'].widget.attrs['class'] = 'textarea'
+
+
+class ProjectUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('name', 'product_url', 'description', 'is_public', 'twitter', 'github', 'does_accept_application', 'application')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['class'] = 'input'
+        self.fields['description'].widget.attrs['class'] = 'textarea'
+        self.fields['product_url'].widget.attrs['class'] = 'input'
+        self.fields['twitter'].widget.attrs['class'] = 'input'
+        self.fields['github'].widget.attrs['class'] = 'input'
+        self.fields['application'].widget.attrs['class'] = 'textarea'
